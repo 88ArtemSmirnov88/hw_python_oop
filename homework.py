@@ -74,7 +74,7 @@ class Running(Training):
                  - self.SPEED_DEDUCTION) * self.weight
                 / self.M_IN_KM * self.duration
                 * self.MIN_IN_HOUR
-        )
+                )
 
 
 class SportsWalking(Training):
@@ -163,5 +163,3 @@ if __name__ == '__main__':
     for workout_type, data in packages:
         training = read_package(workout_type, data)
         main(training)
-
-
