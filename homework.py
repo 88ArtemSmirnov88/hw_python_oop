@@ -52,9 +52,9 @@ class Training:
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         raise NotImplementedError(
-                'Пожалуйста, не считайте калории для объекта этого класса, '
-                'а считайте их только для объектов классов '
-                'дочерних этому классу')
+            'Пожалуйста, не считайте калории для объекта этого класса, '
+            'а считайте их только для объектов классов '
+            'дочерних этому классу')
         pass
 
     def show_training_info(self) -> InfoMessage:
@@ -64,8 +64,7 @@ class Training:
             duration=self.duration,
             distance=self.get_distance(),
             speed=self.get_mean_speed(),
-            calories=self.get_spent_calories()
-            )
+            calories=self.get_spent_calories())
 
 
 class Running(Training):
