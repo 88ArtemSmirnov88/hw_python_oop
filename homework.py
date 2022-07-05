@@ -1,29 +1,24 @@
 from typing import Sequence, Union
+from dataclasses import dataclass, asdict
 
 
+@dataclass
 class InfoMessage:
     """Информационное сообщение о тренировке."""
+    training_type: str
+    duration: float
+    distance: float
+    speed: float
+    calories: float
+    MESSAGE = ('Тип тренировки: {}; '
+               'Длительность: {:.3f} ч.; '
+               'Дистанция: {:.3f} км; '
+               'Ср. скорость: {:.3f} км/ч; '
+               'Потрачено ккал: {:.3f}.')
 
-    def __init__(self,
-                 training_type: str,
-                 duration: float,
-                 distance: float,
-                 speed: float,
-                 calories: float,
-                 ) -> None:
-        self.training_type: str = training_type
-        self.duration: float = duration
-        self.distance: float = distance
-        self.speed: float = speed
-        self.calories: float = calories
-
-    def get_message(self) -> str:
-        """Вывести информацию о тренировке."""
-        return (f'Тип тренировки: {self.training_type}; '
-                f'Длительность: {self.duration:.3f} ч.; '
-                f'Дистанция: {self.distance:.3f} км; '
-                f'Ср. скорость: {self.speed:.3f} км/ч; '
-                f'Потрачено ккал: {self.calories:.3f}.')
+    def get_message(self) -> None:
+        t = asdict(self)
+        return self.MESSAGE.format(*t.values())
 
 
 class Training:
@@ -55,7 +50,6 @@ class Training:
             'Пожалуйста, не считайте калории для объекта этого класса, '
             'а считайте их только для объектов классов '
             'дочерних этому классу')
-        pass
 
     def show_training_info(self) -> InfoMessage:
         """Вернуть информационное сообщение о выполненной тренировке."""
@@ -150,7 +144,10 @@ Read_workout_type: dict = {
 def read_package(workout_type: str, data:
                  Sequence[Union[int, float]]) -> Training:
     """Прочитать данные полученные от датчиков."""
-    return Read_workout_type[workout_type](*data)
+    if workout_type in Read_workout_type:
+        return Read_workout_type[workout_type](*data)
+    else:
+        raise ValueError('Тренировка не найдена')
 
 
 def main(training: Training) -> None:
